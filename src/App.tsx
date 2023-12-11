@@ -1,11 +1,13 @@
-import AdminDashboard from "./components/Admin/AdminDashboard";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./components/Common/Login";
+import { LoginForm, RegisterForm } from "./components/Commons";
 
 function App() {
   return (
     <Router>
-      <Login />
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+      </Routes>
     </Router>
   );
 }
