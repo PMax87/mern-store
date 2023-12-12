@@ -18,9 +18,7 @@ interface CustomFormFieldProps {
 
 const CustomFormField: React.FC<CustomFormFieldProps> = (props) => {
   const [field, meta] = useField(props);
-  const { errors, handleBlur } = useFormikContext();
-
-  console.log(errors);
+  const { handleBlur } = useFormikContext();
 
   if (props.name === "number") {
     return (

@@ -5,6 +5,10 @@ export default {
     extend: {
       fontFamily: ["Open Sans", "ui-sans-serif", "system-ui"],
     },
+    container: {
+      center: true,
+      padding: "2rem",
+    },
   },
   plugins: [],
 };

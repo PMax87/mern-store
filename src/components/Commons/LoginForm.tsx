@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@chakra-ui/react";
 import CustomFormField from "./CustomFormField";
 import { LoginFormModel } from "../../models/LoginFormModel";
-import * as Yup from "yup";
+import { loginFormValidationSchema } from "../../utils/validation-schema/loginFormValidationSchema";
+import { useLogin } from "../../react-query-hooks/useLogin";
 
 const LoginForm = () => {
   const initialValues: LoginFormModel = {
@@ -11,23 +12,22 @@ const LoginForm = () => {
     password: "",
   };
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email required"),
-    password: Yup.string().required("Password required"),
-  });
+  const { doLogin } = useLogin();
 
   return (
-    <div className="w-full h-screen flex justify-center flex-col items-center font-sans">
+    <div className="w-full flex flex-col items-center font-sans">
       <Formik
         initialValues={initialValues}
-        validateOnChange={false}
-        validationSchema={validationSchema}
-        onSubmit={(values) => console.log(values)}
+        validateOnChange={true}
+        validationSchema={loginFormValidationSchema}
+        onSubmit={(values) => doLogin(values)}
       >
-        {() => {
+        {(formikProps) => {
           return (
-            <Form className="w-[500px] py-10 px-10">
-              <h3 className="text-4xl font-bold">Already register?</h3>
+            <Form className="max-w-[500px] w-full md:p-10 p-5 bg-white shadow-xl mt-10">
+              <h3 className="md:text-4xl text-3xl font-bold">
+                Already register?
+              </h3>
               <p className="mt-4 font-medium">
                 Access Now. Otherwise,{" "}
                 <Link to="/register" className="underline">
@@ -49,7 +49,19 @@ const LoginForm = () => {
                 placeholder="Your Password"
                 label="Password"
               />
-              <Button type="submit" className="w-full mt-5" colorScheme={"red"}>
+              <Button
+                isDisabled={!formikProps.isValid}
+                type="submit"
+                size={"lg"}
+                className="w-full mt-10"
+                color={"white"}
+                _hover={{
+                  bg: "white",
+                  border: "1px solid black",
+                  textColor: "black",
+                }}
+                bg={"black"}
+              >
                 Login
               </Button>
             </Form>

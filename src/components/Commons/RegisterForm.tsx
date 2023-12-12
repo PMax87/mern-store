@@ -3,7 +3,7 @@ import { Button } from "@chakra-ui/react";
 import { Form, Formik, FormikProps } from "formik";
 import { RegisterFormModel } from "../../models/RegisterFormModel";
 import CustomFormField from "./CustomFormField";
-import * as Yup from "yup";
+import { registerFormValidationSchema } from "../../utils/validation-schema/registerFormValidationSchema";
 
 const RegisterForm = () => {
   const initialValues = {
@@ -14,35 +14,23 @@ const RegisterForm = () => {
     password: "",
   };
 
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .required("First Name Required")
-      .min(2, "First name minimum length should be 2 char")
-      .max(10, "First name maximum length should be 10 char"),
-    lastName: Yup.string()
-      .required("Last Name Required")
-      .min(2, "Last name minimum length should be 2 char")
-      .max(10, "Last name maximum length should be 10 char"),
-    email: Yup.string().required("Mail required").email("Is not a valid mail"),
-    number: Yup.number().required("Telephone number Required").positive("Telephone number required"),
-    password: Yup.string().required("Password Require"),
-  });
-
   return (
-    <div className="w-full h-screen flex justify-center flex-col items-center font-sans">
+    <div className="w-full flex flex-col items-center font-sans">
       <Formik
         initialValues={initialValues}
         validateOnChange={false}
-        validationSchema={validationSchema}
+        validationSchema={registerFormValidationSchema}
         onSubmit={(values) => console.log(values)}
       >
         {(formikProps: FormikProps<RegisterFormModel>) => {
           return (
-            <Form className="w-[500px] py-10 px-10">
-              <h3 className="text-4xl font-bold">Create your account</h3>
+            <Form className="max-w-[500px] w-full md:p-10 p-5 bg-white shadow-xl mt-10">
+              <h3 className="md:text-4xl text-3xl font-bold">
+                Create your account
+              </h3>
               <p className="mt-4 font-medium">
                 Do you already have an account?{" "}
-                <Link to="/" className="underline">
+                <Link to="/login" className="underline">
                   Log in.
                 </Link>
               </p>
@@ -84,8 +72,14 @@ const RegisterForm = () => {
                 isDisabled={!formikProps.isValid}
                 type="submit"
                 size={"lg"}
-                className="w-full mt-5"
-                colorScheme={"red"}
+                className="w-full mt-10"
+                color={"white"}
+                _hover={{
+                  bg: "white",
+                  border: "1px solid black",
+                  textColor: "black",
+                }}
+                bg={"black"}
               >
                 Register now
               </Button>
