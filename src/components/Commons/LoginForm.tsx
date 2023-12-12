@@ -12,7 +12,7 @@ const LoginForm = () => {
     password: "",
   };
 
-  const { doLogin } = useLogin();
+  const { doLogin, loginSubmitting } = useLogin();
 
   return (
     <div className="w-full flex flex-col items-center font-sans">
@@ -50,7 +50,7 @@ const LoginForm = () => {
                 label="Password"
               />
               <Button
-                isDisabled={!formikProps.isValid}
+                isDisabled={!formikProps.isValid || loginSubmitting}
                 type="submit"
                 size={"lg"}
                 className="w-full mt-10"
