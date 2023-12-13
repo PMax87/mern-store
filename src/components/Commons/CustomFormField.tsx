@@ -20,7 +20,7 @@ const CustomFormField: React.FC<CustomFormFieldProps> = (props) => {
   const [field, meta] = useField(props);
   const { handleBlur } = useFormikContext();
 
-  if (props.name === "number") {
+  if (props.type === "number") {
     return (
       <FormControl
         className="mt-4"

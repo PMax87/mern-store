@@ -56,6 +56,7 @@ const RegisterForm = () => {
                 label="Email"
               />
               <CustomFormField
+                type="number"
                 name="number"
                 id="number"
                 placeholder="Your Telephone Number"
