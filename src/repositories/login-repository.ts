@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiBaseUrl } from "../utils/costants/costants";
+import { apiBaseUrl } from "../utils/costants/apiBaseUrl";
 import { LoginFormModel } from "../models/LoginFormModel";
 
 export class AuthenticationReposirory {

@@ -1,5 +1,5 @@
 import HeroImage from "../images/JPG/pexels-ovan-62689.jpg";
-import Hero from "../components/Hero";
+import Hero from "../components/Commons/Hero";
 import { CustomButton } from "../components/Commons";
 import { Link } from "react-router-dom";
 
@@ -16,8 +16,13 @@ const HomePage = () => {
             perspiciatis pariatur culpa esse molestias iure harum omnis? Harum,
             vel ratione.
           </p>
-          <Link to="/products">
-            <CustomButton label={"Shop now"} />
+          <Link to="/products" className="flex lg:w-36 w-full">
+            <CustomButton
+              label="Shop now"
+              bgColor="black"
+              textColor="white"
+              hoverBgColor="white"
+            />
           </Link>
         </div>
       </Hero>

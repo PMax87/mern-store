@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaUserPlus } from "react-icons/fa";
-import { IoCartSharp } from "react-icons/io5";
+import { UserMenu } from "../../utils/costants/Links";
 
 const Navbar = () => {
   return (
@@ -11,17 +10,7 @@ const Navbar = () => {
             The Store
           </h2>
         </Link>
-        <div className="flex lg:gap-5 gap-2 text-white">
-          <Link to="/login" className="flex items-center gap-2">
-            <h4 className="md:text-xl text-lg">Login</h4>
-            <FaUserPlus className="md:text-3xl text-xl fill-white lg:block hidden" />
-          </Link>
-          <Link to="/" className="flex items-center gap-2">
-            <h4 className="md:text-xl text-lg">Cart</h4>
-            <IoCartSharp className="md:text-3xl text-xl fill-white lg:block hidden" />
-            <p className="md:text-xl text-lg">(1)</p>
-          </Link>
-        </div>
+        <UserMenu />
       </nav>
     </header>
   );
