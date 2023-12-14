@@ -4,7 +4,7 @@ import { LoginFormModel } from "../models/LoginFormModel";
 
 export class AuthenticationReposirory {
   static login({ email, password }: LoginFormModel) {
-    const url = `${apiBaseUrl}/api/auth/login`;
+    const url = `${apiBaseUrl}/auth/login`;
     const headers = {
       "Content-Type": "application/json",
     };

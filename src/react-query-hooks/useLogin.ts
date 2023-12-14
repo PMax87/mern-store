@@ -7,6 +7,7 @@ export const useLogin = () => {
     mutationFn: async (values: LoginFormModel) => {
       try {
         const response = await AuthenticationReposirory.login(values);
+        localStorage.setItem("token", response.data.accessToken);
         console.log(response.data);
         return response.data;
       } catch (error) {
