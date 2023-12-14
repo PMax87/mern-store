@@ -1,6 +1,6 @@
-import axios from "axios";
 import { apiBaseUrl } from "../utils/costants/apiBaseUrl";
 import { LoginFormModel } from "../models/LoginFormModel";
+import { authApi } from "../api/authApi";
 
 export class AuthenticationReposirory {
   static login({ email, password }: LoginFormModel) {
@@ -9,6 +9,6 @@ export class AuthenticationReposirory {
       "Content-Type": "application/json",
     };
     const loginData = { email, password };
-    return axios.post(url, loginData, { headers });
+    return authApi.post(url, loginData, { headers });
   }
 }

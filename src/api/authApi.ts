@@ -3,7 +3,6 @@ import { apiBaseUrl } from "../utils/costants/apiBaseUrl";
 
 export const authApi = axios.create({
   baseURL: apiBaseUrl,
-  withCredentials: true,
 });
 
 authApi.defaults.headers.common["Content-Type"] = "application/json";
@@ -26,6 +25,7 @@ authApi.interceptors.request.use((config) => {
   if (token !== undefined || token !== null) {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
+  console.log("Ciao interceptors e Zelda domani è mio");
   return config;
 }),
   (error) => Promise.reject(error);
