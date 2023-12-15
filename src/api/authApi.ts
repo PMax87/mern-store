@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { apiBaseUrl } from "../utils/costants/apiBaseUrl";
+import { useNavigate } from "react-router-dom";
 
 export const authApi = axios.create({
   baseURL: apiBaseUrl,
@@ -7,25 +8,14 @@ export const authApi = axios.create({
 
 authApi.defaults.headers.common["Content-Type"] = "application/json";
 
-// authApi.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   async (error) => {
-//     const originalRequest = error.config;
-//     const errorMessage = error.response.data.message as string;
-//     if (errorMessage.includes("not logged in") && originalRequest._retry) {
-//       originalRequest._retry = true;
-//     }
-//   }
-// );
-
 authApi.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token !== undefined || token !== null) {
     config.headers["Authorization"] = `Bearer ${token}`;
+  } else {
+    const navigate = useNavigate();
+    navigate("/");
   }
-  console.log("Ciao interceptors e Zelda domani è mio");
   return config;
 }),
-  (error) => Promise.reject(error);
+  (error: AxiosError) => Promise.reject(error);

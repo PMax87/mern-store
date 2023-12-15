@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { UserMenu } from "../../utils/costants/Links";
+import { CartPage } from "../../pages";
+import { ResponsiveMenuSwitch } from "./ResponsiveMenuSwitch";
 
 const Navbar = () => {
   return (
@@ -10,7 +11,10 @@ const Navbar = () => {
             The Store
           </h2>
         </Link>
-        <UserMenu />
+        <div className="flex gap-2 items-center text-white">
+          <ResponsiveMenuSwitch />
+          <CartPage />
+        </div>
       </nav>
     </header>
   );

@@ -4,6 +4,7 @@ import { Form, Formik, FormikProps } from "formik";
 import { RegisterFormModel } from "../../models/RegisterFormModel";
 import CustomFormField from "./CustomFormField";
 import { registerFormValidationSchema } from "../../utils/validation-schema/registerFormValidationSchema";
+import { useRegister } from "../../react-query-hooks/useRegisterUser";
 
 const RegisterForm = () => {
   const initialValues = {
@@ -14,13 +15,15 @@ const RegisterForm = () => {
     password: "",
   };
 
+  const { registerUser, registerSubmitting } = useRegister();
+
   return (
     <div className="w-full flex flex-col items-center font-sans">
       <Formik
         initialValues={initialValues}
         validateOnChange={false}
         validationSchema={registerFormValidationSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => registerUser(values)}
       >
         {(formikProps: FormikProps<RegisterFormModel>) => {
           return (
@@ -70,7 +73,7 @@ const RegisterForm = () => {
                 label="Password"
               />
               <Button
-                isDisabled={!formikProps.isValid}
+                isDisabled={!formikProps.isValid || registerSubmitting}
                 type="submit"
                 size={"lg"}
                 className="w-full mt-10"

@@ -12,7 +12,7 @@ const LoginForm = () => {
     password: "",
   };
 
-  const { doLogin, loginSubmitting } = useLogin();
+  const { handleLogin, loginSubmitting } = useLogin();
 
   return (
     <div className="w-full flex flex-col items-center font-sans">
@@ -20,7 +20,7 @@ const LoginForm = () => {
         initialValues={initialValues}
         validateOnChange={true}
         validationSchema={loginFormValidationSchema}
-        onSubmit={(values) => doLogin(values)}
+        onSubmit={(values) => handleLogin(values)}
       >
         {(formikProps) => {
           return (

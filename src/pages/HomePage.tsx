@@ -1,9 +1,12 @@
 import HeroImage from "../images/JPG/pexels-ovan-62689.jpg";
 import Hero from "../components/Commons/Hero";
 import { CustomButton } from "../components/Commons";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import TopPurchasedProducts from "../components/Commons/TopPurchasedProducts";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Hero img={HeroImage}>
@@ -16,16 +19,19 @@ const HomePage = () => {
             perspiciatis pariatur culpa esse molestias iure harum omnis? Harum,
             vel ratione.
           </p>
-          <Link to="/products" className="flex lg:w-36 w-full">
+          <div className="w-40">
             <CustomButton
               label="Shop now"
               bgColor="black"
               textColor="white"
               hoverBgColor="white"
+              borderColor="black"
+              onClick={() => navigate("/products")}
             />
-          </Link>
+          </div>
         </div>
       </Hero>
+      <TopPurchasedProducts />
     </>
   );
 };
