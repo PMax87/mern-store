@@ -15,8 +15,6 @@ import {
   DrawerFooter,
   DrawerBody,
   DrawerHeader,
-  Popover,
-  PopoverTrigger,
 } from "@chakra-ui/react";
 import { CustomIconButton } from "../components/Commons";
 

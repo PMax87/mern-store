@@ -23,7 +23,7 @@ export const authButtons: AuthButtonsModel = [
 
 export const navigationLinks: NavigationLinksModel = [
   {
-    url: "/setting",
+    url: "/settings",
     label: "Settings",
     icon: <IoIosSettings className="text-2xl block" />,
   },

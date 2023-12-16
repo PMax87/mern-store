@@ -4,6 +4,9 @@ import { LoginFormModel } from "../models/LoginFormModel";
 import { AxiosError } from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/authReducer";
+import { UserModel } from "../models/UserModel";
 
 interface CustomApiResponse {
   message: string;
@@ -11,6 +14,7 @@ interface CustomApiResponse {
 
 export const useLogin = () => {
   const toast = useToast();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { mutateAsync: doLogin, isPending: loginSubmitting } = useMutation({
     mutationFn: async (values: LoginFormModel) => {
@@ -26,8 +30,9 @@ export const useLogin = () => {
         throw error;
       }
     },
-    onSuccess: () => {
+    onSuccess: (data: UserModel) => {
       navigate("/");
+      dispatch(setUser(data));
     },
   });
 

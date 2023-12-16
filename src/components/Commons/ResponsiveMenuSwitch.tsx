@@ -19,14 +19,25 @@ import { FaUserPlus } from "react-icons/fa";
 import { CustomButton, CustomIconButton } from ".";
 import { authButtons } from "../../utils/costants/Links";
 import { navigationLinks } from "../../utils/costants/Links";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux";
+import { setUser } from "../../redux/authReducer";
 
 export const ResponsiveMenuSwitch = () => {
   const { onToggle, isOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.userAuth.user);
   const navigate = useNavigate();
   const handleClick = (url: string, closeModal: () => void) => {
     closeModal();
     navigate(url);
   };
+
+  const handleLogoutUser = () => {
+    localStorage.clear();
+    dispatch(setUser(undefined));
+  };
+
   return (
     <>
       <Popover closeOnBlur={true}>
@@ -40,19 +51,26 @@ export const ResponsiveMenuSwitch = () => {
                 <PopoverContent className="p-5">
                   <PopoverArrow />
                   <PopoverBody className="flex flex-col gap-4 items-center">
-                    {authButtons.map((authButton, index) => {
-                      return (
-                        <CustomButton
-                          key={index}
-                          label={authButton.label}
-                          bgColor={authButton.bgColor}
-                          textColor={authButton.textColor}
-                          hoverBgColor={authButton.bgColor}
-                          borderColor={authButton.borderColor}
-                          onClick={() => handleClick(authButton.url, onClose)}
-                        />
-                      );
-                    })}
+                    {!user ? (
+                      authButtons.map((authButton, index) => {
+                        return (
+                          <CustomButton
+                            key={index}
+                            label={authButton.label}
+                            bgColor={authButton.bgColor}
+                            textColor={authButton.textColor}
+                            hoverBgColor={authButton.bgColor}
+                            borderColor={authButton.borderColor}
+                            onClick={() => handleClick(authButton.url, onClose)}
+                          />
+                        );
+                      })
+                    ) : (
+                      <CustomButton
+                        label={"logut"}
+                        onClick={() => handleLogoutUser()}
+                      />
+                    )}
                   </PopoverBody>
                   <PopoverFooter>
                     <VStack spacing={4} align="left">
@@ -88,19 +106,26 @@ export const ResponsiveMenuSwitch = () => {
               marginTop="60px"
               paddingX={"20px"}
             >
-              {authButtons.map((authButton, index) => {
-                return (
-                  <CustomButton
-                    key={index}
-                    label={authButton.label}
-                    bgColor={authButton.bgColor}
-                    textColor={authButton.textColor}
-                    hoverBgColor={authButton.bgColor}
-                    borderColor={authButton.borderColor}
-                    onClick={() => handleClick(authButton.url, onClose)}
-                  />
-                );
-              })}
+              {!user ? (
+                authButtons.map((authButton, index) => {
+                  return (
+                    <CustomButton
+                      key={index}
+                      label={authButton.label}
+                      bgColor={authButton.bgColor}
+                      textColor={authButton.textColor}
+                      hoverBgColor={authButton.bgColor}
+                      borderColor={authButton.borderColor}
+                      onClick={() => handleClick(authButton.url, onClose)}
+                    />
+                  );
+                })
+              ) : (
+                <CustomButton
+                  label={"logut"}
+                  onClick={() => handleLogoutUser()}
+                />
+              )}
               {navigationLinks.map((link, index) => {
                 return (
                   <Link to={link.url} key={index}>
