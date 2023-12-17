@@ -26,8 +26,10 @@ import { setUser } from "../../redux/AuthReducer";
 export const ResponsiveMenuSwitch = () => {
   const { onToggle, isOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.userAuth.user);
   const navigate = useNavigate();
+
+  const user = useSelector((state: RootState) => state.userAuth.user);
+
   const handleClick = (url: string, closeModal: () => void) => {
     closeModal();
     navigate(url);
@@ -52,7 +54,7 @@ export const ResponsiveMenuSwitch = () => {
               <Portal>
                 <PopoverContent className="p-5">
                   <PopoverArrow />
-                  <PopoverBody className="flex flex-col gap-4 items-center">
+                  <PopoverBody className="flex flex-col gap-4">
                     {!user?.email ? (
                       authButtons.map((authButton, index) => {
                         return (
@@ -68,26 +70,39 @@ export const ResponsiveMenuSwitch = () => {
                         );
                       })
                     ) : (
-                      <CustomButton
-                        label={"Logout"}
-                        onClick={() => handleLogoutUser(onClose)}
-                      />
+                      <>
+                        <p className="text-xl font-medium">
+                          Hello {user.firstName}!
+                        </p>
+                        <CustomButton
+                          bgColor="black"
+                          textColor="white"
+                          label="Logout"
+                          borderColor="black"
+                          onClick={() => handleLogoutUser(onClose)}
+                        />
+                      </>
                     )}
                   </PopoverBody>
                   <PopoverFooter>
                     <VStack spacing={4} align="left">
-                      {navigationLinks.map((link, index) => {
-                        return (
-                          <Link to={link.url} key={index}>
-                            <Stack direction="row" alignItems="center" gap={4}>
-                              {link.icon}
-                              <p className="text-xl font-medium">
-                                {link.label}
-                              </p>
-                            </Stack>
-                          </Link>
-                        );
-                      })}
+                      {user?.email &&
+                        navigationLinks.map((link, index) => {
+                          return (
+                            <Link to={link.url} key={index} onClick={onClose}>
+                              <Stack
+                                direction="row"
+                                alignItems="center"
+                                gap={4}
+                              >
+                                {link.icon}
+                                <p className="text-xl font-medium">
+                                  {link.label}
+                                </p>
+                              </Stack>
+                            </Link>
+                          );
+                        })}
                     </VStack>
                   </PopoverFooter>
                 </PopoverContent>
@@ -108,7 +123,7 @@ export const ResponsiveMenuSwitch = () => {
               marginTop="60px"
               paddingX={"20px"}
             >
-              {!user ? (
+              {!user?.email ? (
                 authButtons.map((authButton, index) => {
                   return (
                     <CustomButton
@@ -123,21 +138,21 @@ export const ResponsiveMenuSwitch = () => {
                   );
                 })
               ) : (
-                <CustomButton
-                  label={"logut"}
-                  onClick={() => handleLogoutUser()}
-                />
+                <p className="text-2xl font-medium mb-2">
+                  Hello {user.firstName}!
+                </p>
               )}
-              {navigationLinks.map((link, index) => {
-                return (
-                  <Link to={link.url} key={index}>
-                    <Stack direction="row" alignItems="center" gap={4}>
-                      {link.icon}
-                      <p className="text-xl font-medium">{link.label}</p>
-                    </Stack>
-                  </Link>
-                );
-              })}
+              {user?.email &&
+                navigationLinks.map((link, index) => {
+                  return (
+                    <Link to={link.url} key={index} onClick={onClose}>
+                      <Stack direction="row" alignItems="center" gap={4}>
+                        {link.icon}
+                        <p className="text-xl font-medium">{link.label}</p>
+                      </Stack>
+                    </Link>
+                  );
+                })}
             </VStack>
           </DrawerContent>
         </Drawer>

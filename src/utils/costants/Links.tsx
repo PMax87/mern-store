@@ -32,9 +32,4 @@ export const navigationLinks: NavigationLinksModel = [
     label: "Orders",
     icon: <FaCartShopping className="text-2xl block" />,
   },
-  {
-    url: "/",
-    label: "Logout",
-    icon: <SlLogout className="text-2xl block" />,
-  },
 ];
