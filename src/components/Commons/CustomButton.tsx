@@ -1,16 +1,19 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
 
-interface CustomButtonProps {
-  label: string;
+export interface CustomButtonProps {
   bgColor: string;
-  textColor: string;
-  borderColor: string;
+  borderColor?: string;
   hoverBgColor: string;
+  hoverBorderColor?: string;
+  hoverTextColor?: string;
+  label: string;
   onClick: () => void;
+  textColor: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = (props) => {
+  console.log(props);
   return (
     <Button
       type="button"
@@ -19,9 +22,9 @@ const CustomButton: React.FC<CustomButtonProps> = (props) => {
       border={`1px solid ${props.borderColor}`}
       color={props.textColor}
       _hover={{
-        bgColor: `${props.bgColor === "white" ? "" : "white"}`,
-        color: `${props.textColor === "white" ? "black" : "black"}`,
-        borderColor: `${props.bgColor === "black" ? "black" : ""}`,
+        bgColor: props.hoverBgColor,
+        color: props.hoverTextColor,
+        border: `1px solid ${props.hoverBorderColor}`,
       }}
       bg={props.bgColor}
       onClick={props.onClick}

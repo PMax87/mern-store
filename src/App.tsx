@@ -25,6 +25,21 @@ function App() {
     },
   });
 
+  const { data: userAddress } = useQuery({
+    queryKey: ["getUserAddress"],
+    queryFn: async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const response = await UserRepository.getUserAddress();
+        return response.data.address;
+      } else {
+        return {};
+      }
+    },
+  });
+
+  console.log(userAddress);
+
   useEffect(() => {
     if (userInfo) {
       dispatch(setUser(userInfo));

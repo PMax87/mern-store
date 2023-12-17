@@ -59,13 +59,15 @@ export const ResponsiveMenuSwitch = () => {
                       authButtons.map((authButton, index) => {
                         return (
                           <CustomButton
+                            bgColor={authButton.bgColor}
+                            borderColor={authButton.borderColor}
+                            hoverBgColor={authButton.hoverBgColor || ""}
+                            hoverBorderColor={authButton.hoverBorderColor}
+                            hoverTextColor={authButton.hoverTextColor || ""}
                             key={index}
                             label={authButton.label}
-                            bgColor={authButton.bgColor}
-                            textColor={authButton.textColor}
-                            hoverBgColor={authButton.bgColor}
-                            borderColor={authButton.borderColor}
                             onClick={() => handleClick(authButton.url, onClose)}
+                            textColor={authButton.textColor}
                           />
                         );
                       })
@@ -76,10 +78,12 @@ export const ResponsiveMenuSwitch = () => {
                         </p>
                         <CustomButton
                           bgColor="black"
-                          textColor="white"
+                          hoverBgColor="white"
+                          hoverBorderColor="black"
+                          hoverTextColor="black"
                           label="Logout"
-                          borderColor="black"
                           onClick={() => handleLogoutUser(onClose)}
+                          textColor="white"
                         />
                       </>
                     )}
@@ -127,13 +131,15 @@ export const ResponsiveMenuSwitch = () => {
                 authButtons.map((authButton, index) => {
                   return (
                     <CustomButton
+                      bgColor={authButton.bgColor}
+                      borderColor={authButton.borderColor}
+                      hoverBgColor={authButton.hoverBgColor || ""}
+                      hoverBorderColor={authButton.hoverBorderColor}
+                      hoverTextColor={authButton.hoverTextColor || ""}
                       key={index}
                       label={authButton.label}
-                      bgColor={authButton.bgColor}
-                      textColor={authButton.textColor}
-                      hoverBgColor={authButton.bgColor}
-                      borderColor={authButton.borderColor}
                       onClick={() => handleClick(authButton.url, onClose)}
+                      textColor={authButton.textColor}
                     />
                   );
                 })

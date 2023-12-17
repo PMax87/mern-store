@@ -1,16 +1,16 @@
 import { IoIosSettings } from "react-icons/io";
-import { SlLogout } from "react-icons/sl";
 import { FaCartShopping } from "react-icons/fa6";
-import { AuthButtonsModel } from "../../models/AuthButtonsModel";
 import { NavigationLinksModel } from "../../models/NavigationLinksModel";
 
-export const authButtons: AuthButtonsModel = [
+export const authButtons = [
   {
-    url: "/login",
-    label: "Login",
     bgColor: "black",
+    hoverBgColor: "white",
+    label: "Login",
     textColor: "white",
-    borderColor: "black",
+    hoverTextColor: "black",
+    hoverBorderColor: "black",
+    url: "/login",
   },
   {
     url: "/register",

@@ -21,12 +21,13 @@ const HomePage = () => {
           </p>
           <div className="w-40">
             <CustomButton
-              label="Shop now"
               bgColor="black"
-              textColor="white"
               hoverBgColor="white"
-              borderColor="black"
+              hoverBorderColor="black"
+              hoverTextColor="black"
+              label="Shop now"
               onClick={() => navigate("/products")}
+              textColor="white"
             />
           </div>
         </div>

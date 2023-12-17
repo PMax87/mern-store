@@ -9,4 +9,11 @@ export class UserRepository {
     };
     return authApi.get(url, { headers });
   }
+  static getUserAddress() {
+    const url = `${apiBaseUrl}/user/address`;
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    return authApi.get(url, { headers });
+  }
 }

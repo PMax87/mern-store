@@ -64,6 +64,7 @@ const TopPurchasedProducts = () => {
                           <CustomButton
                             label="Add to cart"
                             bgColor="black"
+                            hoverTextColor="black"
                             textColor="white"
                             borderColor="black"
                             hoverBgColor="white"
