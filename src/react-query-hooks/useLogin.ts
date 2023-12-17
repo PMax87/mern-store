@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/authReducer";
+import { setUser } from "../redux/AuthReducer";
 import { UserModel } from "../models/UserModel";
 
 interface CustomApiResponse {

@@ -21,7 +21,7 @@ import { authButtons } from "../../utils/costants/Links";
 import { navigationLinks } from "../../utils/costants/Links";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
-import { setUser } from "../../redux/authReducer";
+import { setUser } from "../../redux/AuthReducer";
 
 export const ResponsiveMenuSwitch = () => {
   const { onToggle, isOpen, onClose } = useDisclosure();
@@ -34,8 +34,9 @@ export const ResponsiveMenuSwitch = () => {
   };
 
   const handleLogoutUser = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
     dispatch(setUser(undefined));
+    navigate("/");
   };
 
   return (
@@ -51,7 +52,7 @@ export const ResponsiveMenuSwitch = () => {
                 <PopoverContent className="p-5">
                   <PopoverArrow />
                   <PopoverBody className="flex flex-col gap-4 items-center">
-                    {!user ? (
+                    {!user?.email ? (
                       authButtons.map((authButton, index) => {
                         return (
                           <CustomButton

@@ -11,7 +11,7 @@ authApi.defaults.headers.common["Content-Type"] = "application/json";
 authApi.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token !== undefined || token !== null) {
-    config.headers["Authorization"] = `Bearer ${token}`;
+    config.headers["Token"] = `Bearer ${token}`;
   } else {
     const navigate = useNavigate();
     navigate("/");

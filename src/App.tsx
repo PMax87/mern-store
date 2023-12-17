@@ -4,15 +4,32 @@ import { HomePage, LoginPage } from "./pages";
 import RegisterPage from "./pages/RegisterPage";
 import SettingsPage from "./pages/SettingsPage";
 import UserProtectedRoute from "./utils/protectedRoute";
-import { useSelector } from "react-redux";
-import { RootState } from "./redux";
+import { useQuery } from "@tanstack/react-query";
+import { UserRepository } from "./repositories/user-repository";
+import { useDispatch } from "react-redux";
+import { setUser } from "./redux/AuthReducer";
+import { useEffect } from "react";
 
 function App() {
-  const isAdmin = useSelector((state: RootState) => state.userAuth.isAdmin);
-  const user = useSelector((state: RootState) => state.userAuth.user);
+  const dispatch = useDispatch();
+  const { data: userInfo } = useQuery({
+    queryKey: ["getUserInfo"],
+    queryFn: async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const response = await UserRepository.getUserInfo();
+        return response.data;
+      } else {
+        return {};
+      }
+    },
+  });
 
-  console.log(isAdmin);
-  console.log(user);
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(setUser(userInfo));
+    }
+  }, [dispatch, userInfo]);
 
   return (
     <Router>
