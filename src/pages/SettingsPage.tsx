@@ -33,7 +33,7 @@ const SettingsPage = () => {
             </div>
             <div className="p-2 border border-black">
               <h4 className="font-semibold">Shipping address</h4>
-              <div className="w-auto">
+              <div className="w-">
                 <CustomButton
                   label="Edit shipping address"
                   bgColor="black"
