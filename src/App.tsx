@@ -31,7 +31,7 @@ function App() {
       const token = localStorage.getItem("token");
       if (token) {
         const response = await UserRepository.getUserAddress();
-        return response.data.address;
+        return response.data;
       } else {
         return {};
       }
