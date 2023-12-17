@@ -33,7 +33,8 @@ export const ResponsiveMenuSwitch = () => {
     navigate(url);
   };
 
-  const handleLogoutUser = () => {
+  const handleLogoutUser = (closeModal: () => void) => {
+    closeModal();
     localStorage.removeItem("token");
     dispatch(setUser(undefined));
     navigate("/");
@@ -68,8 +69,8 @@ export const ResponsiveMenuSwitch = () => {
                       })
                     ) : (
                       <CustomButton
-                        label={"logut"}
-                        onClick={() => handleLogoutUser()}
+                        label={"Logout"}
+                        onClick={() => handleLogoutUser(onClose)}
                       />
                     )}
                   </PopoverBody>
