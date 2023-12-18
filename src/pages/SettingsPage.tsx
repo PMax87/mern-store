@@ -1,10 +1,34 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux";
-import { CustomButton } from "../components/Commons";
+import { CustomFormField } from "../components/Commons";
 import { Button } from "@chakra-ui/react";
+import { useEffect, useMemo, useState } from "react";
+import { Formik, Form, useFormikContext } from "formik";
 
 const SettingsPage = () => {
   const user = useSelector((state: RootState) => state.userAuth.user);
+
+  console.log(user?.number);
+
+  console.log(user);
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  let initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    number: 0,
+  };
+
+  if (isEditing && user) {
+    initialValues = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      number: user.number,
+    };
+  }
 
   return (
     <div className="container mt-5">
@@ -24,7 +48,11 @@ const SettingsPage = () => {
               <p>{user?.number}</p>
               <p>{user?.email}</p>
               <div className="w-32">
-                <Button variant="outline" colorScheme="black">
+                <Button
+                  variant="outline"
+                  colorScheme="black"
+                  onClick={() => setIsEditing(true)}
+                >
                   Edit user ingo
                 </Button>
               </div>
@@ -39,6 +67,50 @@ const SettingsPage = () => {
             </div>
           </div>
         </div>
+        <Formik
+          enableReinitialize={true}
+          initialValues={initialValues}
+          onSubmit={(values) => console.log(values)}
+        >
+          {(formikProps) => {
+            console.log(formikProps);
+            return (
+              <>
+                <Form>
+                  <CustomFormField
+                    name="firstName"
+                    id="firstName"
+                    placeholder="Your Name"
+                    type="text"
+                    label="Your Name"
+                  />
+                  <CustomFormField
+                    name="lastName"
+                    id="lastName"
+                    placeholder="Your Surname"
+                    type="text"
+                    label="Surname"
+                  />
+                  <CustomFormField
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    type="email"
+                    label="Email"
+                  />
+                  <CustomFormField
+                    type="number"
+                    name="number"
+                    id="number"
+                    placeholder="Telephone number"
+                    label="Telephone Number"
+                  />
+                  <Button type="submit">invia</Button>
+                </Form>
+              </>
+            );
+          }}
+        </Formik>
       </div>
     </div>
   );
