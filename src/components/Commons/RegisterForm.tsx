@@ -11,7 +11,7 @@ const RegisterForm = () => {
     firstName: "",
     lastName: "",
     email: "",
-    number: 0,
+    number: Number("") || "",
     password: "",
   };
 

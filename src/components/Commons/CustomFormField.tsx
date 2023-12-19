@@ -28,17 +28,20 @@ const CustomFormField: React.FC<CustomFormFieldProps> = (props) => {
         id={props.label}
       >
         <FormLabel>{props.label}</FormLabel>
-        <NumberInput size={"lg"} _hover={{ borderColor: "black" }}>
+        <NumberInput
+          size={"lg"}
+          _hover={{ borderColor: "black" }}
+          id={props.id}
+          value={field.value}
+        >
           <NumberInputField
             _hover={{ borderColor: "black" }}
             borderColor="gray.600"
             borderWidth={2}
-            id={props.id}
             name={props.name}
             onBlur={handleBlur}
             onChange={field.onChange}
             placeholder={props.placeholder}
-            value={field.value}
           />
           <FormErrorMessage fontSize={"md"} className="font-medium">
             {meta.error}

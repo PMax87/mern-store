@@ -18,7 +18,7 @@ const SettingsPage = () => {
     firstName: "",
     lastName: "",
     email: "",
-    number: 0,
+    number: Number("") || "",
   };
 
   if (isEditing && user) {
