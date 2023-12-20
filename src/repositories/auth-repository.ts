@@ -6,17 +6,11 @@ import { RegisterFormModel } from "../models/RegisterFormModel";
 export class AuthenticationRepository {
   static login({ email, password }: LoginFormModel) {
     const url = `${apiBaseUrl}/auth/login`;
-    const headers = {
-      "Content-Type": "application/json",
-    };
     const loginData = { email, password };
-    return authApi.post(url, loginData, { headers });
+    return authApi.post(url, loginData);
   }
   static register(registerFormValues: RegisterFormModel) {
     const url = `${apiBaseUrl}/auth/register`;
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    return authApi.post(url, registerFormValues, { headers });
+    return authApi.post(url, registerFormValues);
   }
 }

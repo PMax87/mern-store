@@ -13,7 +13,6 @@ export interface CustomButtonProps {
 }
 
 const CustomButton: React.FC<CustomButtonProps> = (props) => {
-  console.log(props);
   return (
     <Button
       type="button"

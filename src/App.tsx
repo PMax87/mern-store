@@ -7,8 +7,9 @@ import UserProtectedRoute from "./utils/protectedRoute";
 import { useQuery } from "@tanstack/react-query";
 import { UserRepository } from "./repositories/user-repository";
 import { useDispatch } from "react-redux";
-import { setUser } from "./redux/AuthReducer";
+import { setUser, setUserAddress } from "./redux/AuthReducer";
 import { useEffect } from "react";
+import { UserAddressResponse } from "./models/UserAddress";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,9 @@ function App() {
   useEffect(() => {
     if (userInfo) {
       dispatch(setUser(userInfo));
+    }
+    if (userAddress?.address) {
+      dispatch(setUserAddress(userAddress.address));
     }
   }, [dispatch, userInfo]);
 

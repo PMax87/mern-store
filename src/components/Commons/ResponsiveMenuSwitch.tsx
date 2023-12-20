@@ -144,9 +144,18 @@ export const ResponsiveMenuSwitch = () => {
                   );
                 })
               ) : (
-                <p className="text-2xl font-medium mb-2">
-                  Hello {user.firstName}!
-                </p>
+                <>
+                  <p className="text-xl font-medium">Hello {user.firstName}!</p>
+                  <CustomButton
+                    bgColor="black"
+                    hoverBgColor="white"
+                    hoverBorderColor="black"
+                    hoverTextColor="black"
+                    label="Logout"
+                    onClick={() => handleLogoutUser(onClose)}
+                    textColor="white"
+                  />
+                </>
               )}
               {user?.email &&
                 navigationLinks.map((link, index) => {
