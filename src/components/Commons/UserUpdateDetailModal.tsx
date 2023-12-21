@@ -1,4 +1,4 @@
-import { CustomFormField } from "../../components/Commons";
+import { CustomFormField } from ".";
 import {
   Modal,
   ModalOverlay,
@@ -16,12 +16,16 @@ import { UpdateUserDetailModel } from "../../models/UpdateUserDetailModel";
 import { User } from "../../models/UserModel";
 
 interface PropsType {
-  isOpen: boolean;
-  onClose: () => void;
+  isUserInfoModalOpen: boolean;
+  closeUserInfoModal: () => void;
   user: User;
 }
 
-const UserDetailModal: React.FC<PropsType> = ({ user, isOpen, onClose }) => {
+const UserUpdateDetailModal: React.FC<PropsType> = ({
+  user,
+  isUserInfoModalOpen,
+  closeUserInfoModal,
+}) => {
   let initialValues: UpdateUserDetailModel = {
     firstName: "",
     lastName: "",
@@ -29,7 +33,7 @@ const UserDetailModal: React.FC<PropsType> = ({ user, isOpen, onClose }) => {
     number: Number("") || "",
   };
 
-  if (isOpen && user) {
+  if (isUserInfoModalOpen && user) {
     initialValues = {
       firstName: user.firstName,
       lastName: user.lastName,
@@ -43,12 +47,12 @@ const UserDetailModal: React.FC<PropsType> = ({ user, isOpen, onClose }) => {
 
   useEffect(() => {
     if (updateUserSuccess) {
-      onClose();
+      closeUserInfoModal();
     }
-  }, [updateUserSuccess, onClose]);
+  }, [updateUserSuccess, closeUserInfoModal]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isUserInfoModalOpen} onClose={closeUserInfoModal}>
       <ModalOverlay />
       <ModalContent paddingBottom="30px">
         <ModalHeader>Change user info</ModalHeader>
@@ -120,4 +124,4 @@ const UserDetailModal: React.FC<PropsType> = ({ user, isOpen, onClose }) => {
   );
 };
 
-export default UserDetailModal;
+export default UserUpdateDetailModal;

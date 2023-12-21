@@ -4,7 +4,7 @@ interface UserAddressApiResponse {
   address: AddressDeatils;
 }
 
-interface AddressDeatils {
+export interface AddressDeatils {
   city: string;
   country: string;
   state: string;

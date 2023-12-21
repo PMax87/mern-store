@@ -6,12 +6,16 @@ interface InitialState {
   user: User;
   isAdmin: boolean;
   userAddress: AddressResponse;
+  isEditingUserInfo: boolean;
+  isEditingUserAddress: boolean;
 }
 
 const initialState: InitialState = {
   user: undefined,
   isAdmin: false,
   userAddress: undefined,
+  isEditingUserInfo: false,
+  isEditingUserAddress: false,
 };
 
 export const userAuthSlice = createSlice({
@@ -36,8 +40,19 @@ export const userAuthSlice = createSlice({
         };
       }
     },
+    setIsEditingUserInfo: (state, action: PayloadAction<boolean>) => {
+      return { ...state, isEditingUserInfo: action.payload };
+    },
+    setIsEditingUserAddress: (state, action: PayloadAction<boolean>) => {
+      return { ...state, isEditingUserAddress: action.payload };
+    },
   },
 });
 
-export const { setUser, setUserAddress } = userAuthSlice.actions;
+export const {
+  setUser,
+  setUserAddress,
+  setIsEditingUserInfo,
+  setIsEditingUserAddress,
+} = userAuthSlice.actions;
 export default userAuthSlice.reducer;

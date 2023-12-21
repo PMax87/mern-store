@@ -1,20 +1,52 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux";
 import { Spinner, useDisclosure } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
-import UserDetailModal from "../components/Commons/UserDetailModal";
+import UserUpdateDetailModal from "../components/Commons/UserUpdateDetailModal";
+import {
+  setIsEditingUserAddress,
+  setIsEditingUserInfo,
+} from "../redux/AuthReducer";
+import UserUpdateAddresModal from "../components/Commons/UserUpdateAddresModal";
 
 interface Propstype {
   isLoadingUserInfo: boolean;
 }
 
 const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
+  const dispatch = useDispatch();
+
+  const {
+    isOpen: isUserInfoModalOpen,
+    onClose: closeUserInfoModal,
+    onOpen: openUserInfoModal,
+  } = useDisclosure();
+  const {
+    isOpen: isUserAddressModalOpen,
+    onClose: closeUserAddressModal,
+    onOpen: openUserAddressModal,
+  } = useDisclosure();
+
   const user = useSelector((state: RootState) => state.userAuth.user);
   const userAddress = useSelector(
     (state: RootState) => state.userAuth.userAddress?.address
   );
+  const isEditingUserInfo = useSelector(
+    (state: RootState) => state.userAuth.isEditingUserInfo
+  );
+  const isEditingUserAddress = useSelector(
+    (state: RootState) => state.userAuth.isEditingUserAddress
+  );
 
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const onHandleClickEditUserInfo = (onOpen: () => void) => {
+    onOpen();
+    dispatch(setIsEditingUserInfo(true));
+  };
+
+  const onHandleClickEditUserAddress = (onOpen: () => void) => {
+    onOpen();
+    dispatch(setIsEditingUserAddress(true));
+  };
 
   if (isLoadingUserInfo) {
     return (
@@ -47,7 +79,11 @@ const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
                 </p>
                 <p>{user.number}</p>
                 <p>{user.email}</p>
-                <Button variant="outline" colorScheme="black" onClick={onOpen}>
+                <Button
+                  variant="outline"
+                  colorScheme="black"
+                  onClick={() => onHandleClickEditUserInfo(openUserInfoModal)}
+                >
                   Edit user information
                 </Button>
               </div>
@@ -65,7 +101,13 @@ const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
                   <p>No address found</p>
                 )}
 
-                <Button variant="outline" colorScheme="black">
+                <Button
+                  variant="outline"
+                  colorScheme="black"
+                  onClick={() =>
+                    onHandleClickEditUserAddress(openUserAddressModal)
+                  }
+                >
                   {userAddress?.city ? "Edit address" : "Insert Address"}
                 </Button>
               </div>
@@ -76,7 +118,24 @@ const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
           </div>
         </div>
       </div>
-      <UserDetailModal user={user} isOpen={isOpen} onClose={onClose} />
+      {
+        <>
+          {isEditingUserInfo && (
+            <UserUpdateDetailModal
+              user={user}
+              isUserInfoModalOpen={isUserInfoModalOpen}
+              closeUserInfoModal={closeUserInfoModal}
+            />
+          )}
+          {isEditingUserAddress && (
+            <UserUpdateAddresModal
+              userAddress={userAddress}
+              isUserAddressModalOpen={isUserAddressModalOpen}
+              closeUserAddressModal={closeUserAddressModal}
+            />
+          )}
+        </>
+      }
     </>
   ) : (
     <div className="container mt-5">
