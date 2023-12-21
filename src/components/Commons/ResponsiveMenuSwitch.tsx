@@ -21,7 +21,7 @@ import { authButtons } from "../../utils/costants/Links";
 import { navigationLinks } from "../../utils/costants/Links";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
-import { setUser } from "../../redux/AuthReducer";
+import { setUser, setUserAddress } from "../../redux/AuthReducer";
 
 export const ResponsiveMenuSwitch = () => {
   const { onToggle, isOpen, onClose } = useDisclosure();
@@ -36,10 +36,14 @@ export const ResponsiveMenuSwitch = () => {
   };
 
   const handleLogoutUser = (closeModal: () => void) => {
-    closeModal();
-    localStorage.removeItem("token");
-    dispatch(setUser(undefined));
-    navigate("/");
+    Promise.all([
+      dispatch(setUser(undefined)),
+      dispatch(setUserAddress(undefined)),
+      localStorage.removeItem("token"),
+    ]).then(() => {
+      navigate("/");
+      closeModal();
+    });
   };
 
   return (

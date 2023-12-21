@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthenticationRepository } from "../repositories/auth-repository";
 import { LoginFormModel } from "../models/LoginFormModel";
 import { AxiosError } from "axios";
@@ -13,6 +13,7 @@ interface CustomApiResponse {
 }
 
 export const useLogin = () => {
+  const queryClient = useQueryClient();
   const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,13 +34,14 @@ export const useLogin = () => {
     onSuccess: (data: UserModel) => {
       navigate("/");
       dispatch(setUser(data));
+      queryClient.refetchQueries({ queryKey: ["getUserAddress"] });
+      queryClient.refetchQueries({ queryKey: ["getUserInfo"] });
     },
   });
 
   const handleLogin = async (values: LoginFormModel) => {
     try {
       const result = await doLogin(values);
-      console.log(result);
       toast({
         title: "Login successful",
         description: "Welcome!",

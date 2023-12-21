@@ -9,46 +9,27 @@ import { UserRepository } from "./repositories/user-repository";
 import { useDispatch } from "react-redux";
 import { setUser, setUserAddress } from "./redux/AuthReducer";
 import { useEffect } from "react";
-import { UserAddressResponse } from "./models/UserAddress";
 
 function App() {
   const dispatch = useDispatch();
-  const { data: userInfo } = useQuery({
+  const { data: userInfo, isLoading: isLoadingUserInfo } = useQuery({
     queryKey: ["getUserInfo"],
-    queryFn: async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const response = await UserRepository.getUserInfo();
-        return response.data;
-      } else {
-        return {};
-      }
-    },
+    queryFn: async () => await UserRepository.getUserInfo(),
   });
 
   const { data: userAddress } = useQuery({
     queryKey: ["getUserAddress"],
-    queryFn: async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const response = await UserRepository.getUserAddress();
-        return response.data;
-      } else {
-        return {};
-      }
-    },
+    queryFn: async () => await UserRepository.getUserAddress(),
   });
-
-  console.log(userAddress);
 
   useEffect(() => {
     if (userInfo) {
-      dispatch(setUser(userInfo));
+      dispatch(setUser(userInfo.data));
     }
-    if (userAddress?.address) {
-      dispatch(setUserAddress(userAddress.address));
+    if (userAddress) {
+      dispatch(setUserAddress(userAddress.data));
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, userAddress]);
 
   return (
     <Router>
@@ -61,7 +42,7 @@ function App() {
           path="/settings"
           element={
             <UserProtectedRoute>
-              <SettingsPage />
+              <SettingsPage isLoadingUserInfo={isLoadingUserInfo} />
             </UserProtectedRoute>
           }
         />

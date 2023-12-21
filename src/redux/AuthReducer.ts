@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { User } from "../models/UserModel";
-import { UserAddressResponse } from "../models/UserAddress";
+import { AddressResponse } from "../models/UserAddressModel";
 
 interface InitialState {
-  user: User | undefined;
+  user: User;
   isAdmin: boolean;
-  userAddress: UserAddressResponse;
+  userAddress: AddressResponse;
 }
 
 const initialState: InitialState = {
@@ -15,7 +15,7 @@ const initialState: InitialState = {
 };
 
 export const userAuthSlice = createSlice({
-  name: "userAuthSlice",
+  name: "userAuthSliceUserAddress",
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
@@ -28,8 +28,13 @@ export const userAuthSlice = createSlice({
       }
       return { ...state, user: action.payload };
     },
-    setUserAddress: (state, action: PayloadAction<UserAddressResponse>) => {
-      return { ...state, userAddress: action.payload };
+    setUserAddress: (state, action: PayloadAction<AddressResponse>) => {
+      if (action.payload !== undefined) {
+        return {
+          ...state,
+          userAddress: { address: action.payload.address },
+        };
+      }
     },
   },
 });

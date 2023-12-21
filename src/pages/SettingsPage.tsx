@@ -1,12 +1,34 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux";
-import { useDisclosure } from "@chakra-ui/react";
+import { Spinner, useDisclosure } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import UserDetailModal from "../components/Commons/UserDetailModal";
 
-const SettingsPage = () => {
+interface Propstype {
+  isLoadingUserInfo: boolean;
+}
+
+const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
   const user = useSelector((state: RootState) => state.userAuth.user);
+  const userAddress = useSelector(
+    (state: RootState) => state.userAuth.userAddress?.address
+  );
+
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  if (isLoadingUserInfo) {
+    return (
+      <div className="container mt-5 flex justify-center">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="black.500"
+          size="xl"
+        />
+      </div>
+    );
+  }
 
   const pageContent = user ? (
     <>
@@ -38,8 +60,9 @@ const SettingsPage = () => {
               <div className="p-5 border border-gray-400 flex flex-col gap-3 rounded-lg">
                 <h4 className="font-semibold">Shipping address</h4>
                 <div className="w-32">
+                  {userAddress ? userAddress.city : ""}
                   <Button variant="outline" colorScheme="black">
-                    Edit address
+                    Edit
                   </Button>
                 </div>
               </div>
@@ -53,7 +76,9 @@ const SettingsPage = () => {
       <UserDetailModal user={user} isOpen={isOpen} onClose={onClose} />
     </>
   ) : (
-    ""
+    <div className="container mt-5">
+      <h4 className="text-2xl">Something goes wrong</h4>
+    </div>
   );
 
   return pageContent;
