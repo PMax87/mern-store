@@ -47,24 +47,27 @@ const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
                 </p>
                 <p>{user.number}</p>
                 <p>{user.email}</p>
-                <div className="w-32">
-                  <Button
-                    variant="outline"
-                    colorScheme="black"
-                    onClick={onOpen}
-                  >
-                    Edit user information
-                  </Button>
-                </div>
+                <Button variant="outline" colorScheme="black" onClick={onOpen}>
+                  Edit user information
+                </Button>
               </div>
               <div className="p-5 border border-gray-400 flex flex-col gap-3 rounded-lg">
                 <h4 className="font-semibold">Shipping address</h4>
-                <div className="w-32">
-                  {userAddress ? userAddress.city : ""}
-                  <Button variant="outline" colorScheme="black">
-                    Edit
-                  </Button>
-                </div>
+                {userAddress?.city ? (
+                  <>
+                    <p>{userAddress.street}</p>
+                    <p>{userAddress.city}</p>
+                    <p>{userAddress.zip}</p>
+                    <p>{userAddress.state}</p>
+                    <p>{userAddress.country}</p>
+                  </>
+                ) : (
+                  <p>No address found</p>
+                )}
+
+                <Button variant="outline" colorScheme="black">
+                  {userAddress?.city ? "Edit address" : "Insert Address"}
+                </Button>
               </div>
               <div className="p-5 border border-gray-400 flex flex-col gap-3 rounded-lg">
                 <h4 className="font-semibold">Change password</h4>

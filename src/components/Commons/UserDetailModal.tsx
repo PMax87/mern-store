@@ -45,12 +45,12 @@ const UserDetailModal: React.FC<PropsType> = ({ user, isOpen, onClose }) => {
     if (updateUserSuccess) {
       onClose();
     }
-  }, [updateUserSuccess]);
+  }, [updateUserSuccess, onClose]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent paddingBottom="30px">
         <ModalHeader>Change user info</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
