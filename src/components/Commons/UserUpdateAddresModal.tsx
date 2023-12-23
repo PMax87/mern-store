@@ -9,16 +9,17 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import { AddressDeatils } from "../../models/UserAddressModel";
 import { useUpdateUserAddress } from "../../react-query-hooks/useUpdateUserAddress";
 import { User } from "../../models/UserModel";
 import { useEffect } from "react";
+import { useCreatetUserAddress } from "../../react-query-hooks/useCreatetUserAddress";
+import { AddressDeatils } from "../../models/UserAddressModel";
 
 interface PropsType {
   closeUserAddressModal: () => void;
   isUserAddressModalOpen: boolean;
-  userAddress: AddressDeatils | undefined;
   user: User;
+  userAddress: AddressDeatils | undefined;
 }
 
 const UserUpdateAddresModal: React.FC<PropsType> = ({
@@ -27,7 +28,7 @@ const UserUpdateAddresModal: React.FC<PropsType> = ({
   isUserAddressModalOpen,
   closeUserAddressModal,
 }) => {
-  let initialValues = {
+  let initialValues: AddressDeatils = {
     userID: "",
     city: "",
     country: "",
@@ -55,17 +56,29 @@ const UserUpdateAddresModal: React.FC<PropsType> = ({
     updateUserAddressSuccess,
   } = useUpdateUserAddress();
 
+  const {
+    createUSerAddress,
+    createUserAddressSuccess,
+    isPendingCreateUserAddress,
+  } = useCreatetUserAddress();
+
   const onHandleSubmitUserAdressForm = (values: AddressDeatils) => {
     if (userAddress !== undefined) {
       updateUserAddress(values);
+    } else {
+      createUSerAddress(values);
     }
   };
 
   useEffect(() => {
-    if (updateUserAddressSuccess) {
+    if (updateUserAddressSuccess || createUserAddressSuccess) {
       closeUserAddressModal();
     }
-  }, [updateUserAddressSuccess, closeUserAddressModal]);
+  }, [
+    updateUserAddressSuccess,
+    createUserAddressSuccess,
+    closeUserAddressModal,
+  ]);
 
   return (
     <Modal isOpen={isUserAddressModalOpen} onClose={closeUserAddressModal}>
@@ -128,7 +141,9 @@ const UserUpdateAddresModal: React.FC<PropsType> = ({
 
                     <Button
                       isDisabled={
-                        !formikProps.isValid || isPendingUpdateUserAddress
+                        !formikProps.isValid ||
+                        isPendingUpdateUserAddress ||
+                        isPendingCreateUserAddress
                       }
                       type="submit"
                       size={"lg"}

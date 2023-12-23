@@ -22,4 +22,8 @@ export class UserRepository {
     const url = `${apiBaseUrl}/user/address?update=true`;
     return authApi.post(url, newUserAddress);
   }
+  static createNewUserAddress(newUserAddress: AddressDeatils) {
+    const url = `${apiBaseUrl}/user/address`;
+    return authApi.post(url, newUserAddress);
+  }
 }

@@ -122,17 +122,17 @@ const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
         <>
           {isEditingUserInfo && (
             <UserUpdateDetailModal
-              user={user}
-              isUserInfoModalOpen={isUserInfoModalOpen}
               closeUserInfoModal={closeUserInfoModal}
+              isUserInfoModalOpen={isUserInfoModalOpen}
+              user={user}
             />
           )}
           {isEditingUserAddress && (
             <UserUpdateAddresModal
+              closeUserAddressModal={closeUserAddressModal}
+              isUserAddressModalOpen={isUserAddressModalOpen}
               user={user}
               userAddress={userAddress}
-              isUserAddressModalOpen={isUserAddressModalOpen}
-              closeUserAddressModal={closeUserAddressModal}
             />
           )}
         </>
