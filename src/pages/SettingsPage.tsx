@@ -129,6 +129,7 @@ const SettingsPage: React.FC<Propstype> = ({ isLoadingUserInfo }) => {
           )}
           {isEditingUserAddress && (
             <UserUpdateAddresModal
+              user={user}
               userAddress={userAddress}
               isUserAddressModalOpen={isUserAddressModalOpen}
               closeUserAddressModal={closeUserAddressModal}

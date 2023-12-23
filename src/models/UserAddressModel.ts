@@ -5,9 +5,11 @@ interface UserAddressApiResponse {
 }
 
 export interface AddressDeatils {
+  userID: string;
   city: string;
   country: string;
   state: string;
   street: string;
   zip: string;
+  mobile: number | string;
 }

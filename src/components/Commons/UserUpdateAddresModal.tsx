@@ -9,47 +9,63 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import { updateUserInfoValidationSchema } from "../../utils/validation-schema/updateUserInfoValidationSchema";
-import { useEffect } from "react";
 import { AddressDeatils } from "../../models/UserAddressModel";
+import { useUpdateUserAddress } from "../../react-query-hooks/useUpdateUserAddress";
+import { User } from "../../models/UserModel";
+import { useEffect } from "react";
 
 interface PropsType {
-  isUserAddressModalOpen: boolean;
   closeUserAddressModal: () => void;
-  userAddress: AddressDeatils;
+  isUserAddressModalOpen: boolean;
+  userAddress: AddressDeatils | undefined;
+  user: User;
 }
 
 const UserUpdateAddresModal: React.FC<PropsType> = ({
+  user,
   userAddress,
   isUserAddressModalOpen,
   closeUserAddressModal,
 }) => {
   let initialValues = {
+    userID: "",
     city: "",
     country: "",
     state: "",
     street: "",
     zip: "",
+    mobile: Number("") || "",
   };
 
-  if (isUserAddressModalOpen && userAddress) {
+  if (isUserAddressModalOpen && userAddress && user) {
     initialValues = {
-      city: userAddress.city,
-      country: userAddress.country,
-      state: userAddress.state,
+      userID: user._id,
       street: userAddress.street,
+      city: userAddress.city,
+      state: userAddress.state,
       zip: userAddress.zip,
+      country: userAddress.country,
+      mobile: user.number,
     };
   }
 
-  //   const { updateUser, updateUserSuccess, isPendingUpdateUserInfo } =
-  //     useUpdateUserDetails(user?._id as string);
+  const {
+    updateUserAddress,
+    isPendingUpdateUserAddress,
+    updateUserAddressSuccess,
+  } = useUpdateUserAddress();
 
-  //   useEffect(() => {
-  //     if (updateUserSuccess) {
-  //       closeUserAddressModal();
-  //     }
-  //   }, [updateUserSuccess, closeUserAddressModal]);
+  const onHandleSubmitUserAdressForm = (values: AddressDeatils) => {
+    if (userAddress !== undefined) {
+      updateUserAddress(values);
+    }
+  };
+
+  useEffect(() => {
+    if (updateUserAddressSuccess) {
+      closeUserAddressModal();
+    }
+  }, [updateUserAddressSuccess, closeUserAddressModal]);
 
   return (
     <Modal isOpen={isUserAddressModalOpen} onClose={closeUserAddressModal}>
@@ -61,13 +77,19 @@ const UserUpdateAddresModal: React.FC<PropsType> = ({
           <Formik
             enableReinitialize={true}
             initialValues={initialValues}
-            validationSchema={updateUserInfoValidationSchema}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => onHandleSubmitUserAdressForm(values)}
           >
             {(formikProps) => {
               return (
                 <>
                   <Form>
+                    <CustomFormField
+                      name="street"
+                      id="street"
+                      placeholder="Street"
+                      type="text"
+                      label="Street"
+                    />
                     <CustomFormField
                       name="city"
                       id="city"
@@ -76,15 +98,38 @@ const UserUpdateAddresModal: React.FC<PropsType> = ({
                       label="City"
                     />
                     <CustomFormField
-                      name="lastName"
-                      id="lastName"
-                      placeholder="Last Name"
+                      name="state"
+                      id="state"
+                      placeholder="State"
                       type="text"
-                      label="Last Name"
+                      label="State"
+                    />
+                    <CustomFormField
+                      name="zip"
+                      id="zip"
+                      placeholder="Zip Code"
+                      type="text"
+                      label="Zip"
+                    />
+                    <CustomFormField
+                      name="country"
+                      id="country"
+                      placeholder="Country"
+                      type="text"
+                      label="Country"
+                    />
+                    <CustomFormField
+                      name="mobile"
+                      id="mobile"
+                      placeholder="Mobile Number"
+                      type="number"
+                      label="Mobile Number"
                     />
 
                     <Button
-                      isDisabled={!formikProps.isValid}
+                      isDisabled={
+                        !formikProps.isValid || isPendingUpdateUserAddress
+                      }
                       type="submit"
                       size={"lg"}
                       className="w-full mt-5"
